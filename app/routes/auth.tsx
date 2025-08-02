@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router'
 import { usePuterStore } from '~/lib/puter'
 
 export const meta = () => ([
@@ -8,7 +9,15 @@ export const meta = () => ([
 
 const auth = () => {
 
-    const { isLoading } = usePuterStore()
+    const { isLoading, auth } = usePuterStore()
+    const location = useLocation()
+    const next = location.search.split('next=')[1]
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if(auth.isAuthenticated) navigate(next);
+
+    },[auth.isAuthenticated, next])
 
     return (
         <main className="bg-[url('/images/bg-auth.svg')] bg-cover min-h-screen flex items-center justify-center">
@@ -17,6 +26,29 @@ const auth = () => {
                     <div className='flex flex-col items-center gap-2 text-center'>
                         <h1>Welcome</h1>
                         <h2>Log In to continue Your Job Journey</h2>
+                    </div>
+
+                    {/* Login/Logout Button State */}
+                    <div>
+                        {isLoading? (
+                            <button className='auth-button animate-pulse'>
+                                <p>Signing you in...</p>
+                            </button>
+                        ) : (
+                            <>
+                                {auth.isAuthenticated? (
+                                    <button className='auth-button' onClick={auth.signOut}>
+                                        <p>Log Out</p>
+                                    </button>
+                                ):(
+                                    <button className='auth-button' onClick={auth.signIn}>
+                                        <p>Sign In</p>
+                                    </button>
+                                )}
+                            </>
+                            
+                        )
+                    }
                     </div>
                 </section>
             </div>
