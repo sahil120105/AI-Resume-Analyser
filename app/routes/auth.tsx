@@ -15,8 +15,11 @@ const auth = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if(auth.isAuthenticated) navigate(next);
-
+        if(auth.isAuthenticated) {
+            navigate(next);
+        } else {
+            alert("You have been successfully logged out!");
+        }
     },[auth.isAuthenticated, next])
 
     return (

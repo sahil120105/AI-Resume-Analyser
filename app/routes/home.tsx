@@ -26,29 +26,29 @@ export default function Home() {
   },[auth.isAuthenticated])
 
 
-  return <main className="bg-[url('/images/bg-main.svg')] bg-cover">
-    
-    <Navbar/>
-    
-    {/* Hero section */}
-    <section className="main-section py-16">
-      <div className="page-heading">
-        <h1>Track Your Applications & Resume Ratings</h1>
-        <h2>Review you submissions and check AI-powered feedback.</h2>
-      </div>
-    
-
-      {/* Resumes Section */}
-      {resumes.length > 0 && (
-        <div className="resumes-section">
-          {resumes.map((resume) => (
-            <ResumeCard key={resume.id} resume={resume}/>
-          ))}
+  return (
+    <main className="bg-[url('/images/bg-main.svg')] bg-cover">
+      
+      <Navbar/>
+      
+      {/* Hero section */}
+      <section className="main-section py-16">
+        <div className="page-heading">
+          <h1>Track Your Applications & Resume Ratings</h1>
+          <h2>Review you submissions and check AI-powered feedback.</h2>
         </div>
-      )}
+      
 
-    </section>
-    
+        {/* Resumes Section */}
+        {resumes.length > 0 && (
+          <div className="resumes-section flex flex-wrap">
+            {resumes.map((resume) => (
+              <ResumeCard key={resume.id} resume={resume}/>
+            ))}
+          </div>
+        )}
 
-  </main>
+      </section>
+    </main>
+  )
 }
